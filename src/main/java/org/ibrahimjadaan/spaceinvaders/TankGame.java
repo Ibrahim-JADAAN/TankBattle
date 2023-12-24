@@ -107,9 +107,7 @@ public class TankGame extends Application {
                 if (playerShots.isEmpty()) {
                     playerShots.add(player.shoot(this.player));
 
-                    for (Enemy enemy : enemies) {
-                        enemy.enemyShots.add(enemy.shoot(enemy));
-                    }
+
 
                     // Bullet sound
                     mediaPlayer = new MediaPlayer(med_bullet);
@@ -255,7 +253,8 @@ public class TankGame extends Application {
 
         if (gameOver) {
             gameOver = false;
-            Platform.exit();
+            enemies.clear();
+            //Platform.exit();
         }
 
 
@@ -274,13 +273,29 @@ public class TankGame extends Application {
 
         for (Enemy value : enemies) {
 
+            boolean b = RAND.nextBoolean();
+            int r = RAND.nextInt(1,499);
+
+            if(value.enemyShots.isEmpty() && b && r % 10 == 0){
+                System.out.println("Enemies are shooting");
+                value.enemyShots.add(value.shoot(value));
+                mediaPlayer = new MediaPlayer(med_bullet);
+                mediaPlayer.play();
+            }
+
             value.update();// Update the enemy tank
             value.draw();// Draw the enemy tank
+
+
 
             for (int j = 0; j < value.enemyShots.size(); j++) {
                 Shot shot = value.enemyShots.get(j);
                 //enemies.get(i).enemyShots.get(j).update();
                 value.enemyShots.get(j).draw();
+
+
+
+
 
                 if (shot.posY < 0 || shot.posX < 0 || shot.posY > HEIGHT || shot.posX > WIDTH || shot.toRemove) {
                     value.enemyShots.remove(j);

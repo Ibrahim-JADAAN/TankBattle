@@ -235,6 +235,7 @@ public class TankGame extends Application {
         gc.setFont(Font.font(20));
         gc.setFill(Color.WHITE);
         gc.fillText("Score: " + score, 60, 20);
+        System.out.println("Your score is: " + score);
 
         //Cloud cloud = new Cloud();
         //cloud.draw();
@@ -246,14 +247,19 @@ public class TankGame extends Application {
         if (gameOver) {
             gc.setFont(Font.font(35));
             gc.setFill(Color.YELLOW);
-            System.out.println("game over");
+            //System.out.println("game over");
             gc.fillText("Game Over \n Your Score is: " + score + " \n Click to play again", WIDTH / 2, HEIGHT / 2.5);
+            System.out.println("Your score is: " + score);
             //	return;
         }
 
         if (gameOver) {
             gameOver = false;
+            for (Enemy value : enemies) {
+                value.enemyShots.clear();
+            }
             enemies.clear();
+            playerShots.clear();
             //Platform.exit();
         }
 
@@ -277,7 +283,7 @@ public class TankGame extends Application {
             int r = RAND.nextInt(1,499);
 
             if(value.enemyShots.isEmpty() && b && r % 10 == 0){
-                System.out.println("Enemies are shooting");
+                //System.out.println("Enemies are shooting");
                 value.enemyShots.add(value.shoot(value));
                 mediaPlayer = new MediaPlayer(med_bullet);
                 mediaPlayer.play();
@@ -303,7 +309,8 @@ public class TankGame extends Application {
                 }
 
                 if (shot.collide(player) && !player.exploding) {
-                    score--;
+                    score = 0;
+                    System.out.println("Your score is: " + score);
                     player.explode();
                     shot.toRemove = true;
                 }
@@ -320,6 +327,7 @@ public class TankGame extends Application {
 
             // Check for collision with the player
             if (player.collide(value) && !player.exploding) {
+                playerShots.clear();
                 player.explode();
             }
 
@@ -517,13 +525,13 @@ public class TankGame extends Application {
         public void draw() {
 
             gc.setFill(Color.YELLOW);
-            //if (score >=50 && score<=70 || score>=120) {
-            //gc.setFill(Color.DARKRED);
-            //shotSpeed = 70;
-            //gc.fillOval(posX-5, posY-10, size+10, size+30);
-            //} else {
+            if (score >= 10) {
+            gc.setFill(Color.DARKRED);
+            shotSpeed = 60;
+            gc.fillOval(posX-5, posY-5, size+8, size+8);
+            } else {
             gc.fillOval(posX, posY, size, size);
-            // }
+             }
         }
 
         public boolean collide(Tank Tank) {

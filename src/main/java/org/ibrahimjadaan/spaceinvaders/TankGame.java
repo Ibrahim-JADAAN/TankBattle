@@ -316,11 +316,15 @@ public class TankGame extends Application {
                     score = 0;
                     System.out.println("Your score is: " + score);
                     player.explode();
+                    // Player explosion sound to be added here
+                    Sounds.playerExplosionSound();
                     shot.toRemove = true;
                 }
 
                 value.updateEnemyShot(value.enemyShots);
                 if (value.collide(player) && !value.exploding) {
+                    // Enemy explosion sound to be added here
+                    Sounds.enemyExplosionSound();
                     value.explode();
                 }
             }
@@ -353,6 +357,7 @@ public class TankGame extends Application {
                 if (shot.collide(enemy) && !enemy.exploding) {
                     score++;
                     enemy.explode();
+                    Sounds.enemyExplosionSound();
                     shot.toRemove = true;
                 }
             }

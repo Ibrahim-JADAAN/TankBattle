@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.security.cert.CRLReason;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -109,9 +110,10 @@ public class TankGame extends Application {
 
 
 
+                    Sounds.playerBulletSound();
                     // Bullet sound
-                    mediaPlayer = new MediaPlayer(med_bullet);
-                    mediaPlayer.play();
+                    //mediaPlayer = new MediaPlayer(med_bullet);
+                    //mediaPlayer.play();
 
 
                 } else if (playerShots.size() < MAX_SHOTS) {
@@ -255,6 +257,9 @@ public class TankGame extends Application {
 
         if (gameOver) {
             gameOver = false;
+
+            Sounds.gameOverSound();
+
             for (Enemy value : enemies) {
                 value.enemyShots.clear();
             }
@@ -285,8 +290,7 @@ public class TankGame extends Application {
             if(value.enemyShots.isEmpty() && b && r % 10 == 0){
                 //System.out.println("Enemies are shooting");
                 value.enemyShots.add(value.shoot(value));
-                mediaPlayer = new MediaPlayer(med_bullet);
-                mediaPlayer.play();
+                Sounds.enemyBulletSound();
             }
 
             value.update();// Update the enemy tank

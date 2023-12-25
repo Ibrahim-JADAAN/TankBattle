@@ -67,9 +67,6 @@ public class TankGame extends Application {
     private double keyY;
     private int score;
     String bullet_sound = "D:\\TankBattle\\src\\main\\resources\\sounds\\bullet.mp3";
-    File bullet_file = new File(bullet_sound);
-    Media med_bullet = new Media(bullet_file.toURI().toString());
-    MediaPlayer mediaPlayer;
 
     //start
     public void start(Stage stage) {
@@ -108,13 +105,10 @@ public class TankGame extends Application {
                 if (playerShots.isEmpty()) {
                     playerShots.add(player.shoot(this.player));
 
-
-
                     Sounds.playerBulletSound();
                     // Bullet sound
                     //mediaPlayer = new MediaPlayer(med_bullet);
                     //mediaPlayer.play();
-
 
                 } else if (playerShots.size() < MAX_SHOTS) {
                     //playerShots.add(player.shoot());
@@ -754,7 +748,8 @@ public class TankGame extends Application {
     }
 
     Enemy newEnemyTank() {
-        return new Enemy(50 + RAND.nextInt(WIDTH - 100), 0, PLAYER_SIZE, ENEMY_IMG[ENEMY_IMG.length - 1], Dir.down);
+        // ENEMY_IMG[ENEMY_IMG.length - 1]
+        return new Enemy(50 + RAND.nextInt(WIDTH - 100), 0, PLAYER_SIZE, PLAYER_IMG_DOWN, Dir.down);
     }
 
     public static void main(String[] args) {
